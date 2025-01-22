@@ -31,19 +31,12 @@ Your browser does not support the video tag.
 <video controls width="600">
 <source src="OLED-display.mp4" type="video/mp4">
 Your browser does not support the video tag.
-</video><input type="file" id="fileInput" accept=".txt">
-    <button id="printButton" style="margin-top: 10px;" disabled>Print File</button>
-
-    <div id="fileContent" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9; display: none;">
-        <pre id="content" style="white-space: pre-wrap;"></pre>
-    </div>
-
+</video>
 <div id="fileContent" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
-        <pre id="content" style="white-space: pre-wrap;"></pre>
-    </div>
-    <button id="printButton" style="margin-top: 10px;">Print File</button>
-
-    <script>
+<pre id="content" style="white-space: pre-wrap;"></pre>
+</div>
+<button id="printButton" style="margin-top: 10px;">Print File</button>
+<script>
         // Fetch the file content (replace 'example.txt' with your file path or URL)
         fetch('MICRO-SDCARD-DATALOG.txt')
             .then(response => {
