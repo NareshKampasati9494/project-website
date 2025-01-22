@@ -33,22 +33,26 @@ Your browser does not support the video tag.
 Your browser does not support the video tag.
 </video>
 <input type="file" id="MICRO-SDCARD-DATALOG" accept=".txt">
-    <pre id="fileContent" style="background: #f4f4f4; padding: 10px; border: 1px solid #ddd;"></pre>
-
+    <div id="fileContent" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
+        <strong>File Content:</strong>
+        <pre id="content"></pre>
+    </div>
     <script>
         const fileInput = document.getElementById('fileInput');
-        const fileContent = document.getElementById('fileContent');
+        const contentDisplay = document.getElementById('content');
 
         fileInput.addEventListener('change', (event) => {
             const file = event.target.files[0]; // Get the selected file
             if (file) {
                 const reader = new FileReader();
+
                 reader.onload = (e) => {
-                    fileContent.textContent = e.target.result; // Display the file content
+                    contentDisplay.textContent = e.target.result; // Print the file content
                 };
-                reader.readAsText(file); // Read file as text
+
+                reader.readAsText(file); // Read the file as text
             } else {
-                fileContent.textContent = "No file selected.";
+                contentDisplay.textContent = "No file selected.";
             }
         });
     </script>
