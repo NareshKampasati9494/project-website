@@ -31,60 +31,53 @@ Your browser does not support the video tag.
 <video controls width="600">
 <source src="OLED-display.mp4" type="video/mp4">
 Your browser does not support the video tag.
-</video>
-<input type="file" id="MICRO-SDCARD-DATALOG" accept=".txt">
-    <button id="printButton" style="margin-top: 10px;">Print</button>
-    <div id="fileContent" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
-        <strong>File Content:</strong>
-        <pre id="content"></pre>
+</video><input type="file" id="fileInput" accept=".txt">
+    <button id="printButton" style="margin-top: 10px;" disabled>Print File</button>
+
+    <div id="fileContent" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9; display: none;">
+        <pre id="content" style="white-space: pre-wrap;"></pre>
     </div>
 
-    <script>
+<script>
         const fileInput = document.getElementById('fileInput');
         const contentDisplay = document.getElementById('content');
+        const fileContentDiv = document.getElementById('fileContent');
         const printButton = document.getElementById('printButton');
 
-        // Read and display the file content
         fileInput.addEventListener('change', (event) => {
-            const file = event.target.files[0]; // Get the selected file
+            const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
 
                 reader.onload = (e) => {
-                    contentDisplay.textContent = e.target.result; // Show the file content
+                    contentDisplay.textContent = e.target.result; // Display the file content
+                    fileContentDiv.style.display = 'block';       // Show the file content
+                    printButton.disabled = false;                // Enable the print button
                 };
 
                 reader.readAsText(file); // Read the file as text
             } else {
                 contentDisplay.textContent = "No file selected.";
+                fileContentDiv.style.display = 'none';
+                printButton.disabled = true;
             }
         });
 
-        // Print the file content
         printButton.addEventListener('click', () => {
-            const printContent = document.getElementById('fileContent').innerHTML;
-            const printWindow = window.open('', '_blank');
+            const printWindow = window.open('', '_blank'); // Open a new window for printing
             printWindow.document.write(`
                 <html>
-                    <head>
-                        <title>Print File</title>
-                        <style>
-                            body { font-family: Arial, sans-serif; padding: 20px; }
-                            pre { background: #f4f4f4; padding: 10px; border: 1px solid #ddd; }
-                        </style>
-                    </head>
-                    <body>
-                        ${printContent}
-                        <script>
-                            window.print();
-                            window.close();
-                        </script>
-                    </body>
+                <head><title>Print File</title></head>
+                <body>
+                    <h1>File Content</h1>
+                    <pre>${contentDisplay.textContent}</pre>
+                </body>
                 </html>
             `);
             printWindow.document.close();
+            printWindow.print(); // Trigger the print dialog
         });
-    </script>
+</script>
 
 <img src="RTC.jpg" alt="Project Diagram" width="300">
 <video controls width="600">
