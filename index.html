@@ -32,6 +32,26 @@ Your browser does not support the video tag.
 <source src="OLED-display.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
+<input type="file" id="MICRO-SDCARD-DATALOG" accept=".txt">
+    <pre id="fileContent" style="background: #f4f4f4; padding: 10px; border: 1px solid #ddd;"></pre>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const fileContent = document.getElementById('fileContent');
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0]; // Get the selected file
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    fileContent.textContent = e.target.result; // Display the file content
+                };
+                reader.readAsText(file); // Read file as text
+            } else {
+                fileContent.textContent = "No file selected.";
+            }
+        });
+    </script>
 <img src="RTC.jpg" alt="Project Diagram" width="300">
 <video controls width="600">
 <source src="REAL-TIME CLOCK.mp4" type="video/mp4">
