@@ -33,21 +33,25 @@ Your browser does not support the video tag.
 Your browser does not support the video tag.
 </video>
 <input type="file" id="MICRO-SDCARD-DATALOG" accept=".txt">
+    <button id="printButton" style="margin-top: 10px;">Print</button>
     <div id="fileContent" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
         <strong>File Content:</strong>
         <pre id="content"></pre>
     </div>
+
     <script>
         const fileInput = document.getElementById('fileInput');
         const contentDisplay = document.getElementById('content');
+        const printButton = document.getElementById('printButton');
 
+        // Read and display the file content
         fileInput.addEventListener('change', (event) => {
             const file = event.target.files[0]; // Get the selected file
             if (file) {
                 const reader = new FileReader();
 
                 reader.onload = (e) => {
-                    contentDisplay.textContent = e.target.result; // Print the file content
+                    contentDisplay.textContent = e.target.result; // Show the file content
                 };
 
                 reader.readAsText(file); // Read the file as text
@@ -55,7 +59,33 @@ Your browser does not support the video tag.
                 contentDisplay.textContent = "No file selected.";
             }
         });
+
+        // Print the file content
+        printButton.addEventListener('click', () => {
+            const printContent = document.getElementById('fileContent').innerHTML;
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Print File</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; padding: 20px; }
+                            pre { background: #f4f4f4; padding: 10px; border: 1px solid #ddd; }
+                        </style>
+                    </head>
+                    <body>
+                        ${printContent}
+                        <script>
+                            window.print();
+                            window.close();
+                        </script>
+                    </body>
+                </html>
+            `);
+            printWindow.document.close();
+        });
     </script>
+
 <img src="RTC.jpg" alt="Project Diagram" width="300">
 <video controls width="600">
 <source src="REAL-TIME CLOCK.mp4" type="video/mp4">
