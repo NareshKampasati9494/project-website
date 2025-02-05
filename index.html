@@ -96,7 +96,7 @@ Your browser does not support the video tag.
 <source src="lab-3-2.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
-<script>
+<!-- <script>
 function printFile(fileURL) {
   const iframe = document.createElement('iframe');
   iframe.style.display = 'none'; // Hide the iframe
@@ -114,7 +114,44 @@ function printFile(fileURL) {
 
 // Example usage (replace with your actual file URL):
 const myFileURL = "Lab3 code.txt";
-printFile(myFileURL);
+printFile(myFileURL); -->
 </script>
+<div id="fileContent" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
+<pre id="content" style="white-space: pre-wrap;"></pre>
+</div>
+<button id="printButton" style="margin-top: 10px;">Print File</button>
+<script>
+        // Fetch the file content (replace 'example.txt' with your file path or URL)
+        fetch('Lab3 code.txt')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content').textContent = data; // Display the file content
+            })
+            .catch(error => {
+                document.getElementById('content').textContent = "Failed to load the file.";
+                console.error('There was a problem fetching the file:', error);
+            });
+
+        // Print the file content
+        document.getElementById('printButton').addEventListener('click', () => {
+            const printWindow = window.open('', '_blank'); // Open a new window for printing
+            printWindow.document.write(`
+                <html>
+                <head><title>Print File</title></head>
+                <body>
+                    <h1>File Content</h1>
+                    <pre>${document.getElementById('content').textContent}</pre>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print(); // Trigger the print dialog
+        });
+    </script>
 </body>
 </html>
