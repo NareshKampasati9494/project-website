@@ -189,5 +189,42 @@ printFile(myFileURL); -->
             printWindow.print(); // Trigger the print dialog
         });
     </script>
+<div id="fileContent-3" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
+<pre id="content-3" style="white-space: pre-wrap;"></pre>
+</div>
+<button id="printButton-3" style="margin-top: 10px;">Print File</button>
+<script>
+        // Fetch the file content (replace 'example.txt' with your file path or URL)
+        fetch('punch.csv')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content-3').textContent = data; // Display the file content
+            })
+            .catch(error => {
+                document.getElementById('content-3').textContent = "Failed to load the file.";
+                console.error('There was a problem fetching the file:', error);
+            });
+
+        // Print the file content
+        document.getElementById('printButton-3').addEventListener('click', () => {
+            const printWindow = window.open('', '_blank'); // Open a new window for printing
+            printWindow.document.write(`
+                <html>
+                <head><title>Print File</title></head>
+                <body>
+                    <h1>File Content</h1>
+                    <pre>${document.getElementById('content-3').textContent}</pre>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print(); // Trigger the print dialog
+        });
+    </script>
 </body>
 </html>
