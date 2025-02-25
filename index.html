@@ -459,3 +459,75 @@ Your browser does not support the video tag.
 </script> 
 <img src="DRC_Report.png" alt="Project Diagram" width="300">
 <img src="3D_Render.png" alt="Project Diagram" width="300">
+<div id="filesContainer" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
+    <h2>File Contents</h2>
+</div>
+<button id="printButton-10" style="margin-top: 10px;">Print All Files</button>
+
+<script>
+    // List of files in the folder (replace with dynamic fetching if needed)
+    const files = ['Lab5-B_Cu.gbr', 'Lab5-B_Mask.gbr', 'Lab5-B_Paste.gbr','Lab5-B_Silkscreen.gbr','Lab5-Edge_Cuts.gbr','Lab5-F_Cu.gbr','Lab5-F_Mask.gbr','Lab5-F_Paste.gbr','Lab5-F_Silkscreen.gbr','Lab5-job.gbrjob','Lab5-NPTH.drl','Lab5-PTH.drl']; 
+
+    function loadFiles() {
+        const container = document.getElementById('filesContainer');
+        
+        files.forEach(file => {
+            const fileDiv = document.createElement('div');
+            fileDiv.style.marginBottom = "20px";
+            fileDiv.style.padding = "10px";
+            fileDiv.style.border = "1px solid #ddd";
+            fileDiv.style.background = "#fff";
+
+            const title = document.createElement('h3');
+            title.textContent = `File: ${file}`;
+            
+            const pre = document.createElement('pre');
+            pre.style.whiteSpace = "pre-wrap";
+            pre.id = `content-${file}`;
+            pre.textContent = "Loading..."; // Placeholder text
+
+            fileDiv.appendChild(title);
+            fileDiv.appendChild(pre);
+            container.appendChild(fileDiv);
+
+            // Fetch file content
+            fetch(file)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Failed to load ${file}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    pre.textContent = data; // Display file content
+                })
+                .catch(error => {
+                    pre.textContent = `Error loading ${file}`;
+                    console.error(`Error fetching ${file}:`, error);
+                });
+        });
+    }
+
+    // Print all files
+    document.getElementById('printButton-10').addEventListener('click', () => {
+        const printWindow = window.open('', '_blank'); // Open a new window for printing
+        printWindow.document.write(`
+            <html>
+            <head><title>Print Files</title></head>
+            <body>
+                <h1>All File Contents</h1>
+                ${files.map(file => `
+                    <h3>File: ${file}</h3>
+                    <pre>${document.getElementById(`content-${file}`).textContent}</pre>
+                `).join('')}
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.print(); // Trigger the print dialog
+    });
+
+    // Load files on page load
+    loadFiles();
+</script>
+
