@@ -464,10 +464,84 @@ Your browser does not support the video tag.
 // Example usage (replace with your actual file URL):
 const myFileURL = "lab-6 code.txt";
 printFile(myFileURL); -->
-<div id="fileContent-1" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
-<pre id="content-1" style="white-space: pre-wrap;"></pre>
+<div id="fileContent-10" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
+<pre id="content-10" style="white-space: pre-wrap;"></pre>
 </div>
-<button id="printButton-1" style="margin-top: 10px;">Print File</button>
+<button id="printButton-10" style="margin-top: 10px;">Print File</button>
+<script>
+        // Fetch the file content (replace 'example.txt' with your file path or URL)
+        fetch('lab-6 model.h')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content-10').textContent = data; // Display the file content
+            })
+            .catch(error => {
+                document.getElementById('content-10').textContent = "Failed to load the file.";
+                console.error('There was a problem fetching the file:', error);
+            });
+
+        // Print the file content
+        document.getElementById('printButton-10').addEventListener('click', () => {
+            const printWindow = window.open('', '_blank'); // Open a new window for printing
+            printWindow.document.write(`
+                <html>
+                <head><title>Print File</title></head>
+                <body>
+                    <h1>File Content</h1>
+                    <pre>${document.getElementById('content-10').textContent}</pre>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print(); // Trigger the print dialog
+        });
+</script> 
+<div id="fileContent-11" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
+<pre id="content-11" style="white-space: pre-wrap;"></pre>
+</div>
+<button id="printButton-11" style="margin-top: 10px;">Print File</button>
+<script>
+        // Fetch the file content (replace 'example.txt' with your file path or URL)
+        fetch('lab-6 code.pdf')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content-11').textContent = data; // Display the file content
+            })
+            .catch(error => {
+                document.getElementById('content-11').textContent = "Failed to load the file.";
+                console.error('There was a problem fetching the file:', error);
+            });
+
+        // Print the file content
+        document.getElementById('printButton-11').addEventListener('click', () => {
+            const printWindow = window.open('', '_blank'); // Open a new window for printing
+            printWindow.document.write(`
+                <html>
+                <head><title>Print File</title></head>
+                <body>
+                    <h1>File Content</h1>
+                    <pre>${document.getElementById('content-11').textContent}</pre>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print(); // Trigger the print dialog
+        });
+</script> 
+<div id="fileContent-12" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
+<pre id="content-12" style="white-space: pre-wrap;"></pre>
+</div>
+<button id="printButton-12" style="margin-top: 10px;">Print File</button>
 <script>
         // Fetch the file content (replace 'example.txt' with your file path or URL)
         fetch('lab-6 code.txt')
@@ -478,26 +552,64 @@ printFile(myFileURL); -->
                 return response.text();
             })
             .then(data => {
-                document.getElementById('content-1').textContent = data; // Display the file content
+                document.getElementById('content-12').textContent = data; // Display the file content
             })
             .catch(error => {
-                document.getElementById('content-1').textContent = "Failed to load the file.";
+                document.getElementById('content-12').textContent = "Failed to load the file.";
                 console.error('There was a problem fetching the file:', error);
             });
 
         // Print the file content
-        document.getElementById('printButton-1').addEventListener('click', () => {
+        document.getElementById('printButton-12').addEventListener('click', () => {
             const printWindow = window.open('', '_blank'); // Open a new window for printing
             printWindow.document.write(`
                 <html>
                 <head><title>Print File</title></head>
                 <body>
                     <h1>File Content</h1>
-                    <pre>${document.getElementById('content-1').textContent}</pre>
+                    <pre>${document.getElementById('content-12').textContent}</pre>
                 </body>
                 </html>
             `);
             printWindow.document.close();
             printWindow.print(); // Trigger the print dialog
         });
-    </script>
+</script> 
+<div id="fileContent-13" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
+<pre id="content-13" style="white-space: pre-wrap;"></pre>
+</div>
+<button id="printButton-13" style="margin-top: 10px;">Print File</button>
+<script>
+        // Fetch the file content (replace 'example.txt' with your file path or URL)
+        fetch('lab-6 4.2_IMU_Classifier.ino')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content-13').textContent = data; // Display the file content
+            })
+            .catch(error => {
+                document.getElementById('content-13').textContent = "Failed to load the file.";
+                console.error('There was a problem fetching the file:', error);
+            });
+
+        // Print the file content
+        document.getElementById('printButton-13').addEventListener('click', () => {
+            const printWindow = window.open('', '_blank'); // Open a new window for printing
+            printWindow.document.write(`
+                <html>
+                <head><title>Print File</title></head>
+                <body>
+                    <h1>File Content</h1>
+                    <pre>${document.getElementById('content-13').textContent}</pre>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print(); // Trigger the print dialog
+        });
+</script> 
+
