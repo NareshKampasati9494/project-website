@@ -461,3 +461,19 @@ Your browser does not support the video tag.
 <img src="3D_Render.png" alt="Project Diagram" width="300">
 <a href="Gerber.zip" download>Gerber.zip</a><p></p>
 <a href="Data collection.zip" download>Data collection.zip</a><p></p>
+ // Fetch the file content (replace 'example.txt' with your file path or URL)
+        fetch('lab-6 model.h')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content-5').textContent = data; // Display the file content
+            })
+            .catch(error => {
+                document.getElementById('content-5').textContent = "Failed to load the file.";
+                console.error('There was a problem fetching the file:', error);
+            });
+
