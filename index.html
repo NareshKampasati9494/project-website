@@ -580,4 +580,79 @@ printFile(myFileURL); -->
             printWindow.print(); // Trigger the print dialog
         });
 </script> 
+<div id="fileContent-13" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
+<pre id="content-13" style="white-space: pre-wrap;"></pre>
+</div>
+<button id="printButton-13" style="margin-top: 10px;">Print File</button>
+<script>
+        // Fetch the file content (replace 'example.txt' with your file path or URL)
+        fetch('car_detection_code.txt')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content-13').textContent = data; // Display the file content
+            })
+            .catch(error => {
+                document.getElementById('content-13').textContent = "Failed to load the file.";
+                console.error('There was a problem fetching the file:', error);
+            });
+
+        // Print the file content
+        document.getElementById('printButton-13').addEventListener('click', () => {
+            const printWindow = window.open('', '_blank'); // Open a new window for printing
+            printWindow.document.write(`
+                <html>
+                <head><title>Print File</title></head>
+                <body>
+                    <h1>File Content</h1>
+                    <pre>${document.getElementById('content-13').textContent}</pre>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print(); // Trigger the print dialog
+        });
+</script> 
+<div id="fileContent-14" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
+<pre id="content-14" style="white-space: pre-wrap;"></pre>
+</div>
+<button id="printButton-14" style="margin-top: 10px;">Print File</button>
+<script>
+        // Fetch the file content (replace 'example.txt' with your file path or URL)
+        fetch('traffic_code.txt')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content-14').textContent = data; // Display the file content
+            })
+            .catch(error => {
+                document.getElementById('content-14').textContent = "Failed to load the file.";
+                console.error('There was a problem fetching the file:', error);
+            });
+
+        // Print the file content
+        document.getElementById('printButton-14').addEventListener('click', () => {
+            const printWindow = window.open('', '_blank'); // Open a new window for printing
+            printWindow.document.write(`
+                <html>
+                <head><title>Print File</title></head>
+                <body>
+                    <h1>File Content</h1>
+                    <pre>${document.getElementById('content-14').textContent}</pre>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print(); // Trigger the print dialog
+        });
+</script> 
+
 
