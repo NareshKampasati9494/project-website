@@ -7,6 +7,44 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+</script> 
+<div id="fileContent-15" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
+<pre id="content-15" style="white-space: pre-wrap;"></pre>
+</div>
+<button id="printButton-15" style="margin-top: 10px;">Print File</button>
+<script>
+        // Fetch the file content (replace 'example.txt' with your file path or URL)
+        fetch('project m2 presentation.pdf')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content-15').textContent = data; // Display the file content
+            })
+            .catch(error => {
+                document.getElementById('content-15').textContent = "Failed to load the file.";
+                console.error('There was a problem fetching the file:', error);
+            });
+
+        // Print the file content
+        document.getElementById('printButton-15').addEventListener('click', () => {
+            const printWindow = window.open('', '_blank'); // Open a new window for printing
+            printWindow.document.write(`
+                <html>
+                <head><title>Print File</title></head>
+                <body>
+                    <h1>File Content</h1>
+                    <pre>${document.getElementById('content-15').textContent}</pre>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print(); // Trigger the print dialog
+        });
+</script> 
 <h1>Welcome to My Project Website</h1>
 <p>This website documents my project progress.</p>
 <h2>Updates</h2>
@@ -655,8 +693,9 @@ printFile(myFileURL); -->
         });
 </script> 
 <video controls width="600">
-<source src="Lab_7_video.mp4" type="video/mp4">
+<source src="Lab_7_Demo.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
+<img src="PHOTO-2025-03-26-01-00-12.jpg" alt="Project Diagram" width="300">
 
 
