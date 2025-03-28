@@ -85,7 +85,7 @@ bool ei_camera_capture(uint32_t img_width, uint32_t img_height, uint8_t *out_buf
 #define RED_LED D0   // Red LED connected to D0
 #define YELLOW_LED D1   // Yellow LED connected to D1
 #define GREEN_LED D2   // Green LED connected to D2
-#define SWITCH_PIN D6 // Switch connected to D6
+#define SWITCH_PIN D7 // Switch connected to D6
 #define PED_LED 21
 
 //Traffic variables
@@ -138,42 +138,42 @@ void loop()
   if(Traffic_State == 0)
   {
     //Set Light to green, turn off others
-    digitalWrite(GREEN_LED, LOW); //Turn on
-    digitalWrite(YELLOW_LED, HIGH); //Turn off
-    digitalWrite(RED_LED, HIGH); //Turn off
+    digitalWrite(GREEN_LED, HIGH); //Turn on
+    digitalWrite(YELLOW_LED, LOW); //Turn off
+    digitalWrite(RED_LED, LOW); //Turn off
     digitalWrite(PED_LED, HIGH); //Turn off
 
     //Switch state if pedestrian
-    if(Pedestrian_Detected)
+    if(Pedestrian_Button)
       Traffic_State = 1;
 
-    wait(3000);
+    delay(3000);
   }
 
   if(Traffic_State == 1)
   {
     //Set Light to yellow, turn off others
-    digitalWrite(GREEN_LED, HIGH); //Turn off
-    digitalWrite(YELLOW_LED, LOW); //Turn on
-    digitalWrite(RED_LED, HIGH); //Turn off
+    digitalWrite(GREEN_LED, LOW); //Turn off
+    digitalWrite(YELLOW_LED, HIGH); //Turn on
+    digitalWrite(RED_LED, LOW); //Turn off
     digitalWrite(PED_LED, HIGH); //Turn off
 
     //Switch state after delay
     Traffic_State = 2;
 
-    wait(2000);
+    delay(2000);
   }
 
   if(Traffic_State == 2)
   {
     //Set Light to red, pedestrian blinking, turn off others
-    digitalWrite(GREEN_LED, HIGH); //Turn off
-    digitalWrite(YELLOW_LED, HIGH); //Turn off
-    digitalWrite(RED_LED, LOW); //Turn on
+    digitalWrite(GREEN_LED, LOW); //Turn off
+    digitalWrite(YELLOW_LED, LOW); //Turn off
+    digitalWrite(RED_LED, HIGH); //Turn on
     digitalWrite(PED_LED, LOW); //Turn on
 
     //Switch state if no pedestrians & car detected
-    if(!Pedestrian_Detected && Car_Detected)
+    if(!Pedestrian_Button && Car_Detected)
       Traffic_State = 3;
 
     //wait(5000);
@@ -185,22 +185,22 @@ void loop()
       else
         digitalWrite(PED_LED, LOW); //Turn on
       
-      wait(500);
+      delay(500);
     }
   }
 
   if(Traffic_State == 3)
   {
     //Set Light to red, pedestrian solid, turn off others
-    digitalWrite(GREEN_LED, HIGH); //Turn off
-    digitalWrite(YELLOW_LED, HIGH); //Turn off
-    digitalWrite(RED_LED, LOW); //Turn on
+    digitalWrite(GREEN_LED, LOW); //Turn off
+    digitalWrite(YELLOW_LED, LOW); //Turn off
+    digitalWrite(RED_LED, HIGH); //Turn on
     digitalWrite(PED_LED, LOW); //Turn on
 
     //Switch state after delay
     Traffic_State = 0;
 
-    wait(2000);
+    delay(2000);
   }
 }
 
@@ -209,7 +209,7 @@ bool detect_car()
     bool car_detected = false;
     // instead of wait_ms, we'll wait on the signal, this allows threads to cancel us...
     if (ei_sleep(5) != EI_IMPULSE_OK) {
-        return;
+        return false;
     }
 
     snapshot_buf = (uint8_t*)malloc(EI_CAMERA_RAW_FRAME_BUFFER_COLS * EI_CAMERA_RAW_FRAME_BUFFER_ROWS * EI_CAMERA_FRAME_BYTE_SIZE);
@@ -217,7 +217,7 @@ bool detect_car()
     // check if allocation was successful
     if(snapshot_buf == nullptr) {
         ei_printf("ERR: Failed to allocate snapshot buffer!\n");
-        return;
+        return false;
     }
 
     ei::signal_t signal;
@@ -227,7 +227,7 @@ bool detect_car()
     if (ei_camera_capture((size_t)EI_CLASSIFIER_INPUT_WIDTH, (size_t)EI_CLASSIFIER_INPUT_HEIGHT, snapshot_buf) == false) {
         ei_printf("Failed to capture image\r\n");
         free(snapshot_buf);
-        return;
+        return false;
     }
 
     // Run the classifier
@@ -236,7 +236,7 @@ bool detect_car()
     EI_IMPULSE_ERROR err = run_classifier(&signal, &result, debug_nn);
     if (err != EI_IMPULSE_OK) {
         ei_printf("ERR: Failed to run classifier (%d)\n", err);
-        return;
+        return false;
     }
 
     // print the predictions
