@@ -1,3 +1,29 @@
+const myFileURL = "Lab8_code.txt";
+printFile(myFileURL); -->
+<div id="fileContent-1" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">
+<pre id="content-1" style="white-space: pre-wrap;"></pre>
+</div>
+<button id="printButton-1" style="margin-top: 10px;">Print File</button>
+<script>
+        // Fetch the file content (replace 'example.txt' with your file path or URL)
+        fetch('Lab8_code.txt')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('content-1').textContent = data; // Display the file content
+            })
+            .catch(error => {
+                document.getElementById('content-1').textContent = "Failed to load the file.";
+                console.error('There was a problem fetching the file:', error);
+            });
+<video controls width="600">
+<source src="Lab8_Demo.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 <!DOCTYPE html>
 <html lang="en">
 <head>
